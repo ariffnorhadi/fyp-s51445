@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Edu4All - Login</title>
+	<meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+	<meta name="viewport" content="width=device-width, initial-scale=1"/>
+
+	<!--    <link rel="stylesheet" href="https://rsms.me/inter/inter.css">-->
+	<link rel="stylesheet" th:href="@{/css/application.css}">
+</head>
+<body>
+<div class="min-h-screen bg-gray-900 flex flex-col justify-center py-12 sm:px-6 lg:px-8">
+
+	<div class="sm:mx-auto sm:w-full sm:max-w-md">
+		<div class="mb-2">
+			<div class="flex items-center justify-start text-gray-200 text-sm">
+				<a class="flex" th:href="@{/}">
+					<svg class="w-6 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+					     xmlns="http://www.w3.org/2000/svg">
+						<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+						      d="M15 19l-7-7 7-7"></path>
+					</svg>
+					<span>Home</span>
+				</a>
+			</div>
+		</div>
+		<div class="bg-white py-8 px-4 shadow sm:rounded-lg sm:px-10">
+			<div class="sm:mx-auto sm:w-full sm:max-w-md mb-6">
+				<img class="mx-auto h-12 w-auto" th:src="@{/img/Edu4All.jpg}" alt="Application Logo"/>
+			</div>
+			<!-- tag::alert[] -->
+			<div th:if="${registeredFullName}"> <!--.-->
+				<div
+					th:replace="fragments/alerts :: success(message=#{user.register.success(${registeredFullName})}, useHorizontalPadding=false)"></div>
+				<!--.-->
+			</div>
+			<!-- end::alert[] -->
+			<form th:action="@{/login}" method="post"><!--.-->
+				<!-- tag::login-error[] -->
+				<th:block th:if="${param.error}"> <!--.-->
+					<div th:replace="fragments/alerts :: error(message=#{login.error},useHorizontalPadding=false)"></div>
+				</th:block>
+				<!-- end::login-error[] -->
+				<!-- tag::logout-confirmation[] -->
+				<th:block th:if="${param.logout}"> <!--.-->
+					<div
+						th:replace="fragments/alerts :: success(message=#{login.logout.confirmation},useHorizontalPadding=false)"></div>
+				</th:block>
+				<!-- end::logout-confirmation[] -->
+				<div>
+					<label for="username" class="block text-sm font-medium text-gray-700"
+					       th:text="#{login.username}">
+						Username
+					</label>
+					<div class="mt-1 rounded-md shadow-sm">
+						<input id="username"
+						       class="duration-500 transition appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+						       type="text"
+						       required
+						       name="username" autofocus><!--.-->
+					</div>
+				</div>
+
+				<div class="mt-6">
+					<label for="password" class="block text-sm font-medium leading-5 text-gray-700"
+					       th:text="#{login.password}">
+						Password
+					</label>
+					<div class="mt-1 rounded-md shadow-sm">
+						<input id="password"
+						       class="transition duration-500 appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+						       type="password"
+						       required
+						       name="password"><!--.-->
+					</div>
+				</div>
+
+				<div class="mt-6 flex items-center justify-between">
+					<div class="flex items-center">
+						<input id="remember_me" type="checkbox"
+						       class="transition duration-500 h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded">
+						<label for="remember_me" class="ml-2 block text-sm text-gray-900">
+							Remember me
+						</label>
+					</div>
+				</div>
+
+				<div class="mt-6">
+          <span class="block w-full rounded-md shadow-sm">
+            <button type="submit"
+                    class="transition duration-500 w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-800 focus:outline-none focus:ring-2 focus:ring-offset-2 ring-offset-blue-700 focus:ring-blue-900">
+              Sign in
+            </button>
+          </span>
+				</div>
+			</form>
+			<div class="mt-6 flex items-center justify-between">
+				<div class="text-sm leading-5">
+					<a href="#"
+					   class="duration-500 font-medium text-blue-500 hover:text-blue-900">
+						Forgot password
+					</a>
+				</div>
+
+				<div class="text-sm leading-5">
+					<a th:href="@{/signup}"
+					   class="duration-500 font-medium text-gray-600 hover:text-gray-900">
+						No account? Sign up
+					</a>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<script th:src="@{/js/alpine.js}"></script>
+<script th:replace="fragments/alerts :: alert-js"></script>
+</body>
+</html>

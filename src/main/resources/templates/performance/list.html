@@ -1,0 +1,93 @@
+<!-- tag::full[] -->
+<!DOCTYPE html>
+<html
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{layout/layout}"
+	th:with="activeMenuItem='dashboard'">
+
+<head>
+	<title>Subject</title>
+	<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+	<script type="text/javascript" th:inline="javascript">
+      google.charts.load('current', {packages: ['corechart', 'bar']});
+      google.charts.setOnLoadCallback(drawBasic);
+
+      function drawBasic() {
+
+          var data = new google.visualization.DataTable();
+          data.addColumn('string', 'Time of Day');
+          data.addColumn('number', 'Percentage');
+
+          data.addRows([[${chartData}]]);
+
+          var options = {
+              title: 'My Performance',
+              hAxis: {
+                  title: 'Attempt',
+                  format: 'h:mm a',
+                  viewWindow: {
+                      min: [7, 30, 0],
+                      max: [17, 30, 0]
+                  }
+              },
+              vAxis: {
+                  title: 'Percentage'
+              }
+          };
+
+          var chart = new google.visualization.ColumnChart(
+              document.getElementById('chart_div'));
+
+          chart.draw(data, options);
+      }
+	</script>
+</head>
+<body>
+<div layout:fragment="page-content">
+	<div class="max-w-7xl mx-auto px-4 sm:px-6 md:px-8 mb-4">
+		<div class="flex mb-2 sm:mb-4 text-gray-900 text-sm">
+			<a class="flex" th:href="@{'/my-subject/'+${selectedTopic.subjectTeacher.id}}">
+				<svg class="w-6 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+				     xmlns="http://www.w3.org/2000/svg">
+					<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+					      d="M15 19l-7-7 7-7"></path>
+				</svg>
+				<span>Back</span>
+			</a>
+		</div>
+		<h1 th:text="${selectedTopic.name}" class="text-2xl font-semibold text-gray-900"
+		>Performance</h1>
+	</div>
+	<div th:if="${blankName}">
+		<div th:replace="fragments/alerts :: error(message=${blankName}, useHorizontalPadding=true)"></div>
+	</div>
+	<div th:if="${existed}">
+		<div th:replace="fragments/alerts :: error(message=${existed}, useHorizontalPadding=true)"></div>
+	</div>
+	<div sec:authorize="hasRole('STUDENT')"
+	     class="sm:flex sm:items-start sm:space-x-4 max-w-7xl mx-auto px-4 sm:px-6 md:px-8">
+		<div th:if="${!chartData.isEmpty()}" class="rounded-lg overflow-hidden shadow-lg w-full h-96"
+		     id="chart_div"></div>
+		<div th:if="${chartData.isEmpty()}">
+			<a th:href="@{'/topics/'+${selectedTopic.id}}"
+			   class="text-yellow-700 bg-yellow-50 px-4 py-2 font-medium rounded-md border tracking-wider border-yellow-800 hover:bg-yellow-500 hover:text-yellow-50 transition duration-300 hover:shadow-lg hover:border-yellow-500">You
+				better do your revision now !</a>
+		</div>
+	</div>
+	<div sec:authorize="hasRole('TEACHER')"
+	     class="sm:flex sm:items-start sm:space-x-4 max-w-7xl mx-auto px-4 sm:px-6 md:px-8 overflow-hidden">
+		<div class="bg-white text-gray-600 rounded-md w-full overflow-hidden">
+			<div class="hover:text-gray-900 hover:bg-green-200 flex duration-500 transition" th:each="student:${studentList}">
+				<a class="w-full p-4" th:href="@{''+${selectedTopic.id}+'/'+${student.id}}" th:text="${student.fullName}"></a>
+			</div>
+		</div>
+
+	</div>
+</div>
+</body>
+<th:block layout:fragment="page-scripts">
+	<script th:replace="fragments/alerts :: alert-js"></script>
+</th:block>
+</html>
+<!-- end::full[] -->

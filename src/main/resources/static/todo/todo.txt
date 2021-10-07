@@ -1,0 +1,11 @@
+TODO:
+1. For Principal and Admin, implement Expel operation
+Implement post method, 
+check if principal and the student/admin/teacher 's school is under him
+if yes, then
+haih, haha i really need to know how the cascade works..
+
+2, For teachers, create category entity, 
+each category has foreign key of SubjectClassTeacher entity
+then create question entity. each question has foreign key of category entity
+

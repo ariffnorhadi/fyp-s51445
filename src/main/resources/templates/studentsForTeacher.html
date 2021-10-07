@@ -1,0 +1,67 @@
+<!-- tag::full[] -->
+<!DOCTYPE html>
+<html
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{layout/layout}"
+	th:with="activeMenuItem='class'">
+
+<head>
+	<title>People</title>
+</head>
+<body>
+<div layout:fragment="page-content">
+	<div class="flex flex-col max-w-7xl mx-auto px-4 sm:px-6 md:px-8">
+		<div class="flex mb-2 sm:mb-4 text-gray-900 text-sm">
+			<a class="flex" th:href="@{/}">
+				<svg class="w-6 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+				     xmlns="http://www.w3.org/2000/svg">
+					<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+					      d="M15 19l-7-7 7-7"></path>
+				</svg>
+				<span>Back</span>
+			</a>
+		</div>
+		<h1 class="text-xl mb-2 tracking-wider font-semibold text-gray-900"
+		>Students</h1>
+		<div class="sm:flex sm:flex-col sm:items-start max-w-7xl">
+			<div class="my-2 w-full text-sm uppercase tracking-wider text-gray-500 font-medium">
+				<p th:text="${selectedClass.getName()}"></p>
+			</div>
+			<div class="my-2 sm:my-2 w-full">
+				<div th:if="${!studentList.isEmpty()}"
+				     class="w-full rounded-md overflow-hidden shadow-lg">
+					<table class="w-full">
+						<thead>
+						<tr>
+							<td
+								class="px-6 py-3 border-b border-gray-200 bg-gray-50 text-left text-xs leading-4 font-medium text-gray-800 uppercase tracking-wider"
+								th:text="'Student: '+${studentList.size()}"></td>
+							<td
+								class="px-6 py-3 border-b border-gray-200 bg-gray-50 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider"></td>
+
+						</tr>
+						<tr>
+							<th th:replace="fragments/table :: header(#{user.name})"></th>
+							<th th:replace="fragments/table :: header('Phone')"></th>
+							<!--                                <th th:replace="fragments/table :: header('Class')"></th>-->
+						</tr>
+						</thead>
+						<tbody>
+						<tr class="bg-white" th:each="student:${studentList}">
+							<td th:replace="fragments/table :: data(contents=${student.getFullName()},primary=true)"></td>
+							<td th:replace="fragments/table :: data(contents=${student.phoneNumber},hideOnMobile=false)"></td>
+							<!--                                <td th:replace="fragments/table :: data(contents=${student.},hideOnMobile=true)"></td>-->
+						</tr>
+						</tbody>
+					</table>
+				</div>
+			</div>
+		</div>
+	</div>
+</body>
+<th:block layout:fragment="page-scripts">
+	<script th:replace="fragments/alerts :: alert-js"></script>
+</th:block>
+</html>
+<!-- end::full[] -->

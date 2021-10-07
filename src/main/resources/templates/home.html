@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Edu4All - Home</title>
+	<meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+	<meta name="viewport" content="width=device-width, initial-scale=1"/>
+	<link rel="stylesheet" th:href="@{/css/application.css}">
+</head>
+<body class="bg-gray-900">
+<div th:replace="fragments/top-menu :: home-menu"></div>
+<div class="lg:flex lg:flex-col">
+	<div class="w-full bg-gray-900 pt-4">
+		<div class="px-4 py-10 px-2 sm:px-6">
+			<div class="rounded-lg">
+				<div class="sm:flex sm:items-center sm:justify-between max-w-7xl mx-auto">
+					<div class="sm:mt-0 sm:hidden flex flex-col justify-center bg-gray-300 rounded-xl">
+						<div class="rounded-t-xl">
+							<img class="rounded-t-xl" th:src="@{/img/bilik-darjah.jpg}" alt="Ariff"/>
+						</div>
+						<div class="text-gray-900 text-center flex flex-col justify-center h-full p-4">
+							<p>Never stop learning</p>
+						</div>
+					</div>
+					<div class="flex flex-col sm:pt-0">
+						<h1 class="sm:text-4xl text-lg tracking-widest text-gray-100 font-black sm:mb-6 mt-4 sm:mt-0 uppercase">Final
+							Year Project II</h1>
+						<p class="text-xl text-gray-100 font-semibold mb-2">A journey to a better management for
+							your
+							organisation
+						</p>
+						<p class="text-md text-gray-200">Build a meaningful final year project<br> for a greater
+							future in the country and the world.</p>
+						<div class="flex sm:mt-12 mt-6">
+							<a th:href="@{/signup}"
+							   class="duration-500 transition px-6 py-4 text-lg font-semibold bg-indigo-500 text-white rounded-full text-sm hover:bg-blue-900 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-blue-500 focus:ring-blue-700 uppercase">Get
+								started</a>
+						</div>
+					</div>
+					<img class="hidden sm:block sm:h-96 sm:object-cover sm:rounded-xl" th:src="@{img/bilik-darjah.jpg}"
+					     alt="Bilik Darjah"/>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="w-full bg-gray-700 py-12">
+		<div class="px-4 sm:px-6">
+			<div class="rounded-lg sm:py-6">
+				<div class="lg:flex lg:items-center sm:space-x-6 sm:justify-between max-w-7xl mx-auto">
+					<img class="rounded-xl object-cover h-96" th:src="@{/img/system-flow.png}" alt="Ariff"/>
+					<div class="flex sm:order-3 flex-col justify-center sm:text-right mr-6 mt-4 sm:mt-0">
+						<h1 class="sm:tracking-wider sm:text-left text-gray-100 sm:text-3xl text-xl font-bold mb-4 uppercase">
+							Features</h1>
+						<ul class="sm:text-left space-y-2 text-lg text-gray-100">
+							<li>Anyone can establish school, manage their school from admins to students</li>
+							<li>Anyone can enroll to school anytime</li>
+							<li>Optimistic Locking to prevent concurrent updates on particular entity</li>
+							<li>Role based authorization</li>
+							<li>BCrypt password encoder to secure your account</li>
+						</ul>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="w-full bg-gray-700">
+		<div class="px-4 sm:px-6 pb-12">
+			<div class="rounded-lg">
+				<div class="md:flex md:items-center sm:justify-center max-w-7xl mx-auto">
+					<div class="sm:mt-0 sm:hidden flex flex-col bg-gray-300 rounded-xl">
+						<div class="rounded-t-xl">
+							<img class="rounded-t-xl" th:src="@{/img/me.jpg}" alt="Ariff"/>
+						</div>
+						<div class="sm:flex sm:flex-col p-4">
+							<div class="text-gray-900 flex flex-col justify-center h-full">
+								<h5 class="text-lg font-semibold mb-2">Muhammad Arif Bin Norhadi (S51445)</h5>
+								<p>Bachelor of Computer Science</p>
+								<p>Faculty of Ocean Engineering Technology and Informatics</p>
+								<p>Univesiti Malaysia Terengganu</p>
+							</div>
+							<div class="flex space-x-2 justify-center mt-6 flex-wrap">
+								<img class="h-8 m-2 rounded-md" th:src="@{/img/aws.svg}" alt="github">
+								<img class="h-8 m-2" th:src="@{/img/github.svg}" alt="github">
+								<img class="h-8 m-2" th:src="@{/img/linux.svg}" alt="github">
+								<img class="h-8 m-2" th:src="@{/img/ubuntu.svg}" alt="github">
+								<img class="h-8 m-2" th:src="@{/img/java.svg}" alt="github">
+								<img class="h-8 m-2" th:src="@{/img/postgresql.svg}" alt="github">
+								<img class="h-8 m-2" th:src="@{/img/intellij-idea.svg}" alt="github">
+								<img class="h-8 m-2 rounded-md" th:src="@{/img/tailwind.png}" alt="github">
+								<img class="h-8 m-2 rounded-md" th:src="@{/img/thymeleaf.png}" alt="github">
+								<img class="h-8 m-2 rounded-md" th:src="@{/img/spring-boot.png}" alt="github">
+							</div>
+						</div>
+					</div>
+					<div class="flex flex-col justify-center sm:text-right mr-6 mt-4 sm:mt-0">
+						<h1 class="text-gray-100 sm:tracking-wider sm:text-3xl text-xl font-bold mb-4 uppercase">Tech Stacks</h1>
+						<ul class="space-y-2 text-lg text-gray-100">
+							<li>PostgreSQL (RDBMS)</li>
+							<li>Tailwind CSS (CSS Framework)</li>
+							<li>Thymeleaf (Java Template Engine)</li>
+							<li>Java, Spring Boot, Spring Security, Spring Data JPA, etc</li>
+							<!--
+							TODO: Continue customizing landing page, download Amigoscode JS Course
+							-->
+						</ul>
+					</div>
+					<div class="sm:mt-0 mt-4 hidden sm:flex bg-gray-300 rounded-xl space-x-2">
+						<div>
+							<img class="w-40 h-full object-cover rounded-l-xl object-right" th:src="@{img/me.jpg}"
+							     alt="Ariff"/>
+						</div>
+						<div class="sm:flex sm:flex-col p-4">
+							<div class="text-gray-900 flex flex-col justify-center h-full">
+								<h5 class="text-lg font-semibold mb-2">Muhammad Arif Bin Norhadi (S51445)</h5>
+								<p>Bachelor of Computer Science</p>
+								<p>Faculty of Ocean Engineering Technology and Informatics</p>
+								<p>Universiti Malaysia Terengganu</p>
+							</div>
+							<div class="flex w-full justify-between mt-6 flex-wrap">
+								<img class="h-8 m-2 rounded-md" th:src="@{/img/aws.svg}" alt="github">
+								<img class="h-8 m-1" th:src="@{/img/github.svg}" alt="github">
+								<img class="h-10 m-1" th:src="@{/img/linux.svg}" alt="github">
+								<img class="h-9 m-1" th:src="@{/img/ubuntu.svg}" alt="github">
+								<img class="h-8 m-1" th:src="@{/img/java.svg}" alt="github">
+								<img class="h-8 m-1" th:src="@{/img/postgresql.svg}" alt="github">
+								<img class="h-9 m-1" th:src="@{/img/intellij-idea.svg}" alt="github">
+								<img class="h-8 m-1 rounded-md" th:src="@{/img/tailwind.png}" alt="github">
+								<img class="h-8 m-1 rounded-md" th:src="@{/img/thymeleaf.png}" alt="github">
+								<img class="h-8 m-1 rounded-md" th:src="@{/img/spring-boot.png}" alt="github">
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div>
+			<div class="flex justify-center mb-2 sm:mb-10">
+				<img class="object-center" th:src="@{/img/lines.png}" alt="lines">
+			</div>
+		</div>
+
+		<footer class="bg-gray-900 text-white py-6 h-96">
+			<div class="max-w-7xl mx-auto">
+				<div class="md:flex sm:items-start sm:justify-between sm:space-x-4 h-60 p-6">
+					<div>
+						<h1 class="font-medium tracking-wider">Universiti Malaysia Terengganu</h1>
+						<h1 class="font-medium tracking-wider">21300, Kuala Terengganu, Terengganu</h1>
+					</div>
+					<div>
+						<h1>Copyright 2021</h1>
+					</div>
+					<div>
+						<h1>Reach me at t.me/ariffnorhadi</h1>
+					</div>
+				</div>
+			</div>
+		</footer>
+	</div>
+</div>
+</body>
+</html>

@@ -1,0 +1,72 @@
+<!-- tag::full[] -->
+<!DOCTYPE html>
+<html
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{layout/layout}"
+	th:with="activeMenuItem='class'">
+
+<head>
+	<title>Class</title>
+</head>
+<body>
+<div layout:fragment="page-content">
+	<div class="max-w-7xl mx-auto px-4 sm:px-6 md:px-8">
+		<div class="flex items-center justify-start text-gray-700 text-sm">
+			<a class="flex" th:href="@{/classes}">
+				<svg class="w-6 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+				     xmlns="http://www.w3.org/2000/svg">
+					<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+					      d="M15 19l-7-7 7-7"></path>
+				</svg>
+				<span>Back</span>
+			</a>
+		</div>
+		<h1 th:text="${selectedClass.name}+' at '+${selectedClass.school.name}"
+		    class="text-xl font-semibold text-gray-700 my-4"
+		>Classes</h1>
+	</div>
+
+	<div th:if="${blankName}">
+		<div th:replace="fragments/alerts :: error(message=${blankName}, useHorizontalPadding=true)"></div>
+	</div>
+	<div th:if="${existed}">
+		<div th:replace="fragments/alerts :: error(message=${existed}, useHorizontalPadding=true)"></div>
+	</div>
+	<div class="sm:flex max-w-7xl mx-auto px-4 sm:px-6 md:px-8">
+		<div class="my-2 border shadow-lg bg-gray-200 sm:p-6 p-2 w-full rounded-md">
+			<form class="space-y-4" th:object="${selectedClass}" method="post"
+			      th:action="@{/classes/update/{id}(id=${selectedClass.id})}">
+				<div th:replace="fragments/forms :: textinput('Class Name', 'name', 'sm:col-span-3')"></div>
+				<div class="flex items-end text-md text-gray-700 space-x-2">
+					<label for="teacher">Teacher</label>
+					<select
+						class="rounded-md text-gray-900 text-sm w-full focus:ring-green-500 focus:border-green-500 transition duration-500"
+						name="teacher" id="teacher">
+						<th:block th:if="${selectedClass.teacher != null}">
+							<option th:each="teacher:${teacherListForClass}" th:value="${teacher}"
+							        th:text="${teacher.getFullName()}"></option>
+							<option selected th:value="${selectedClass.teacher}"
+							        th:text="${selectedClass.teacher.getFullName()}"></option>
+						</th:block>
+						<th:block th:if="${selectedClass.teacher == null}">
+							<option th:each="teacher:${teacherListForClass}" th:text="${teacher.getFullName()}"></option>
+						</th:block>
+					</select>
+				</div>
+				<div class="">
+					<button
+						class="w-full bg-green-500 text-white uppercase p-2 rounded-md tracking-wider text-sm font-medium transition duration-500">
+						Save
+					</button>
+				</div>
+			</form>
+		</div>
+	</div>
+</div>
+</body>
+<th:block layout:fragment="page-scripts">
+	<script th:replace="fragments/alerts :: alert-js"></script>
+</th:block>
+</html>
+<!-- end::full[] -->

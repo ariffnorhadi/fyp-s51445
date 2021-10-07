@@ -1,0 +1,84 @@
+<!-- tag::full[] -->
+<!DOCTYPE html>
+<html
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{layout/layout}"
+	th:with="activeMenuItem='subject'">
+
+<head>
+	<title>Subject</title>
+</head>
+<body>
+<div layout:fragment="page-content">
+	<div class="max-w-7xl mx-auto px-4 sm:px-6 md:px-8">
+		<h1 class="text-2xl font-semibold text-gray-900"
+		>Subject (s)</h1>
+	</div>
+	<div th:if="${blankName}">
+		<div th:replace="fragments/alerts :: error(message=${blankName}, useHorizontalPadding=true)"></div>
+	</div>
+	<div th:if="${existed}">
+		<div th:replace="fragments/alerts :: error(message=${existed}, useHorizontalPadding=true)"></div>
+	</div>
+	<div class="sm:flex sm:items-start sm:space-x-4 max-w-7xl mx-auto px-4 sm:px-6 md:px-8">
+		<div class="w-full space-y-4" sec:authorize="hasRole('PRINCIPAL')">
+			<p class="my-4 uppercase tracking-wider text-sm text-gray-600 font-medium">My School</p>
+			<div th:each="school:${ownedSchool}" class="overflow-hidden flex flex-col bg-white shadow-md rounded-md">
+				<div class="bg-gray-200 px-4 py-2">
+					<p class="tracking-wider text-sm uppercase font-medium text-gray-800" th:text="${school.name}"></p>
+				</div>
+				<div id="create-subject-form">
+					<form class="w-full p-4" method="post" th:object="${newSubject}" th:action="@{/subjects/create}">
+						<input type="hidden" name="schoolId" th:value="${school.id}">
+						<div th:replace="fragments/forms :: textinput('Name of subject', 'name', 'sm:col-span-3')"></div>
+						<button
+							class="my-2 text-white tracking-wider text-sm font-medium uppercase w-full py-2 px-2 rounded-md bg-indigo-400">
+							Create
+						</button>
+					</form>
+				</div>
+				<div th:if="${school.subjects.isEmpty()}">
+					<p>Currently there is no subject in this school</p>
+				</div>
+				<div class="flex items-center pb-2 justify-between space-y-2 px-4" th:if="${!school.subjects.isEmpty()}" th:each="subject:${school.subjects}">
+					<p class="text-gray-600" th:text="${subject.name}">Subject Name</p>
+					<a href="">Edit</a>
+				</div>
+			</div>
+		</div>
+		<div sec:authorize="hasRole('ADMIN')"
+		     class="my-4 w-full bg-white shadow-md rounded-lg overflow-hidden">
+			<div class="bg-gray-200">
+				<p class="uppercase text-sm tracking-wider font-semibold text-gray-600 px-4 py-2" th:text="${currentUser.school.name}"></p>
+			</div>
+			<div class="p-4" id="create-subject-form-admin">
+				<form th:object="${newSubject}" method="post" th:action="@{/subjects/create}" class="space-y-2"
+				      action="">
+					<input type="hidden" name="schoolId" th:value="${currentUser.school.id}">
+					<div th:replace="fragments/forms :: textinput('Name of subject', 'name', 'sm:col-span-3')"></div>
+					<button
+						class="my-2 text-white tracking-wider text-sm font-medium uppercase w-full py-2 px-2 rounded-md bg-indigo-400">
+						Create
+					</button>
+				</form>
+			</div>
+			<div th:if="${currentUser.school.subjects.isEmpty()}">
+				<p>Currently there is no subject in this school</p>
+			</div>
+			<div class="space-y-2 p-4">
+				<div class="flex justify-between" th:if="${!currentUser.school.subjects.isEmpty()}"
+				     th:each="subject:${subjectListForAdmin}">
+					<p class="text-gray-600" th:text="${subject.name}"></p>
+					<a href="">Edit</a>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+</body>
+<th:block layout:fragment="page-scripts">
+	<script th:replace="fragments/alerts :: alert-js"></script>
+</th:block>
+</html>
+<!-- end::full[] -->

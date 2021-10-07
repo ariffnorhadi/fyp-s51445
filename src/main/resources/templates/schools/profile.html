@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+	<meta charset="UTF-8">
+	<title>School Profile</title>
+	<meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+	<meta name="viewport" content="width=device-width, initial-scale=1"/>
+	<link rel="stylesheet" th:href="@{/css/application.css}">
+</head>
+<body>
+<table>
+	<thead>
+	<tr>
+		<th>Name</th>
+		<th>Description</th>
+		<th>Address</th>
+	</tr>
+	</thead>
+	<tbody>
+	<tr>
+		<td th:text="${selectedSchool.name}"></td>
+		<td th:text="${selectedSchool.description}"></td>
+		<td th:text="${selectedSchool.address}"></td>
+	</tr>
+	</tbody>
+</table>
+</body>
+</html>

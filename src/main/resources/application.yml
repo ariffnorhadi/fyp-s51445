@@ -1,0 +1,20 @@
+spring:
+  thymeleaf:
+    template-resolver-order: 0
+    cache: false
+  datasource:
+    username: ariffnorhadi
+    password: password_here
+    driver-class-name: org.postgresql.Driver
+    url: jdbc:postgresql://localhost/fyp_demo
+  jpa:
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
+    hibernate:
+      ddl-auto: update
+  messages:
+    basename: i18n/messages
+
+server:
+  error:
+    include-exception: true
+  port: 8080

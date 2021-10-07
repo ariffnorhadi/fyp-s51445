@@ -1,0 +1,176 @@
+<!-- tag::full[] -->
+<!DOCTYPE html>
+<html
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{layout/layout}"
+	th:with="activeMenuItem='class'">
+
+<head>
+	<title>Class</title>
+</head>
+<body>
+<div layout:fragment="page-content">
+	<div class="max-w-7xl mx-auto px-4 sm:px-6 md:px-8">
+		<h1 class="text-2xl font-semibold text-gray-900"
+		>Classes</h1>
+	</div>
+
+	<div th:if="${blankName}">
+		<div th:replace="fragments/alerts :: error(message=${blankName}, useHorizontalPadding=true)"></div>
+	</div>
+	<div th:if="${existed}">
+		<div th:replace="fragments/alerts :: error(message=${existed}, useHorizontalPadding=true)"></div>
+	</div>
+	<div class="sm:flex max-w-7xl mx-auto px-4 sm:px-6 md:px-8">
+		<div sec:authorize="hasRole('PRINCIPAL')" th:if="${!currentUser.schools.isEmpty()}" id="principal-area" class="space-y-2 w-full">
+			<div th:each="ownedSchool:${ownedSchools}" class="bg-gray-100 p-4 space-y-2 rounded-lg">
+				<div class="w-full">
+					<h1 th:text="${ownedSchool.name}"
+					    class="mb-2 text-sm text-left uppercase font-medium tracking-wider text-gray-500">
+						School Name</h1>
+					<div class="bg-white shadow px-4 py-5 rounded-lg sm:p-6">
+						<form id="user-form"
+						      th:object="${newClass}"
+						      th:action="@{/classes/create}"
+						      method="post"> <!--.-->
+							<div class="w-full">
+								<div class="sm:flex sm:space-x-2">
+									<input type="hidden" name="schoolId" th:value="${ownedSchool.id}">
+									<div th:replace="fragments/forms :: textinput(#{school.name}, 'name', 'sm:col-span-3 w-full')"></div>
+									<button type="submit"
+									        class="w-full sm:w-min sm:mt-2 inline-flex items-center justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-green-600 hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500"
+									        th:text="#{create}">
+										Save
+									</button>
+								</div>
+							</div>
+
+						</form>
+					</div>
+				</div>
+				<div th:if="${!ownedSchool.classes.isEmpty()}"
+				     class="bg-white overflow-hidden shadow-lg rounded-md border border-gray-200">
+					<table class="w-full">
+						<thead>
+						<tr>
+							<th th:replace="fragments/table :: header('Class')"></th>
+							<th th:replace="fragments/table :: header('Students')"></th>
+							<th th:replace="fragments/table :: header('Subjects')"></th>
+							<th th:replace="fragments/table :: header('Teacher')"></th>
+							<th th:replace="fragments/table :: header('')"></th>
+						</tr>
+						</thead>
+						<tbody>
+						<tr class="hover:bg-gray-100" th:each="c:${ownedSchool.classes}">
+							<td th:replace="fragments/table :: data(contents=${c.name},primary=true)"></td>
+							<td class="px-6 py-4 whitespace-no-wrap text-sm leading-5 font-medium">
+									<a th:href="@{'/classes/'+${c.id}+'/students'}" th:text="${c.students.size()}" class="flex w-full whitespace-no-wrap text-sm leading-5 text-gray-500 hover:text-gray-900"></a>
+							</td>
+							<td class="px-6 py-4 whitespace-no-wrap text-sm leading-5 font-medium">
+								<th:block th:if="${c.subjectTeachers.isEmpty()}">
+									<a th:href="@{'/classes/'+${c.id}+'/assign/subject'}" class="flex w-full text-green-600 hover:text-green-900">Assign subjects</a>
+								</th:block>
+								<th:block th:if="${c.subjectTeachers.size() >= 1}">
+									<a th:href="@{'/classes/'+${c.id}+'/assign/subject'}" th:text="${c.subjectTeachers.size()}" class="flex w-full whitespace-no-wrap text-sm leading-5 text-gray-500 hover:text-gray-900"></a>
+								</th:block>
+							</td>
+							<td class="px-6 py-4 whitespace-no-wrap text-sm leading-5 font-medium">
+								<th:block th:if="${c.teacher == null}">
+									<a th:href="@{'/classes/'+${c.id}+'/assign/teacher'}" class="flex w-full text-green-600 hover:text-green-900">Assign a teacher</a>
+								</th:block>
+								<th:block th:if="${c.teacher != null}">
+									<a th:href="@{'/classes/'+${c.id}+'/assign/teacher'}" th:text="${c.teacher.getFullName()}" class="flex w-full whitespace-no-wrap text-sm leading-5 text-gray-500 hover:text-gray-900"></a>
+								</th:block>
+							</td>
+							<td th:replace="fragments/table :: dataWithLink('Edit', @{'/classes/'+ ${c.id}+'/edit'})"></td>
+						</tr>
+						</tbody>
+					</table>
+				</div>
+				<div th:if="${ownedSchool.classes.isEmpty()}">
+					<h1>There is no class in this school currently</h1>
+				</div>
+			</div>
+		</div>
+<!--		TODO: Implement EDIT operation for classes for ADMIN-->
+		<div sec:authorize="hasRole('ADMIN')" id="admin-area"
+		     class="space-y-2 w-full">
+			<div class="bg-gray-100 py-4 space-y-2 rounded-lg">
+				<div class="space-y-2">
+					<h1 th:text="${currentUser.school.name}"
+					    class="text-left text-sm uppercase font-medium tracking-wider text-gray-500">School Name</h1>
+					<div class="bg-white shadow px-4 py-5 rounded-lg sm:p-6">
+						<form id="user-form2"
+						      th:object="${newClass}"
+						      th:action="@{/classes/create}"
+						      method="post"> <!--.-->
+							<div class="w-full">
+								<div class="sm:flex sm:space-x-2">
+									<input type="hidden" name="schoolId" th:value="${currentUser.school.id}">
+									<div th:replace="fragments/forms :: textinput(#{school.name}, 'name', 'sm:col-span-3 w-full')"></div>
+									<button type="submit"
+									        class="sm:w-min w-full mt-2 sm:mt-0 inline-flex items-center justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-green-600 hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500"
+									        th:text="#{create}">
+										Save
+									</button>
+								</div>
+							</div>
+
+						</form>
+					</div>
+				</div>
+				<div th:if="${!classListForAdminReference.isEmpty()}"
+				     class="bg-white overflow-hidden shadow-lg rounded-md border border-gray-200">
+					<table class="w-full">
+						<thead>
+						<tr>
+							<th th:replace="fragments/table :: header('Class')"></th>
+							<th th:replace="fragments/table :: header(title='Students',hideOnMobile=true)"></th>
+							<th th:replace="fragments/table :: header('Subjects')"></th>
+							<th th:replace="fragments/table :: header('Teacher')"></th>
+							<th th:replace="fragments/table :: header('')"></th>
+						</tr>
+						</thead>
+						<tbody>
+						<tr class="hover:bg-gray-100" th:each="c:${classListForAdminReference}">
+							<td th:replace="fragments/table :: data(contents=${c.name},primary=true)"></td>
+							<td class="px-6 py-4 whitespace-no-wrap text-sm leading-5 font-medium">
+								<a th:href="@{'/classes/'+${c.id}+'/students'}" th:text="${c.students.size()}" class="flex w-full whitespace-no-wrap text-sm leading-5 text-gray-500 hover:text-gray-900"></a>
+							</td>
+							<td class="px-6 py-4 whitespace-no-wrap text-sm leading-5 font-medium">
+								<th:block th:if="${c.subjectTeachers.isEmpty()}">
+									<a th:href="@{'/classes/'+${c.id}+'/assign/subject'}" class="flex w-full text-green-600 hover:text-green-900">Assign subjects</a>
+								</th:block>
+								<th:block th:if="${c.subjectTeachers.size() >= 1}">
+									<a th:href="@{'/classes/'+${c.id}+'/assign/subject'}" th:text="${c.subjectTeachers.size()}" class="flex w-full whitespace-no-wrap text-sm leading-5 text-gray-500 hover:text-gray-900"></a>
+								</th:block>
+							</td>
+							<td class="px-6 py-4 whitespace-no-wrap text-sm leading-5 font-medium">
+								<th:block th:if="${c.teacher == null}">
+									<a th:href="@{'/classes/'+${c.id}+'/assign/teacher'}" class="flex text-green-600 hover:text-green-900">Assign a teacher</a>
+								</th:block>
+								<th:block th:if="${c.teacher != null}">
+									<a th:href="@{'/classes/'+${c.id}+'/assign/teacher'}" th:text="${c.teacher.getFullName()}" class="flex whitespace-no-wrap text-sm leading-5 text-gray-500 hover:text-gray-900"></a>
+								</th:block>
+							</td>
+							<td th:replace="fragments/table :: dataWithLink('Edit', @{'/classes/'+ ${c.id}+'/edit'})"></td>
+
+						</tr>
+						</tbody>
+					</table>
+				</div>
+				<div th:if="${classListForAdminReference.isEmpty()}">
+					<h1>There is no class currently in this school</h1>
+				</div>
+			</div>
+		</div>
+
+	</div>
+</div>
+</body>
+<th:block layout:fragment="page-scripts">
+	<script th:replace="fragments/alerts :: alert-js"></script>
+</th:block>
+</html>
+<!-- end::full[] -->

@@ -1,0 +1,20 @@
+spring:
+  thymeleaf:
+    template-resolver-order: 0
+    cache: false
+  datasource:
+    username: ariffnorhadi
+    password: awsrdspasswordhere
+    driver-class-name: org.postgresql.Driver
+    url: jdbc:postgresql://fyps51445.cnqwysomethinghere23d.ap-southeast-1.rds.amazonaws.com:5432/databse_name
+  jpa:
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
+    hibernate:
+      ddl-auto: update
+  messages:
+    basename: i18n/messages
+
+server:
+  error:
+    include-exception: true
+  port: 5000
