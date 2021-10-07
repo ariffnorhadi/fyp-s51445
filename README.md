@@ -17,5 +17,5 @@ I'm gonn put reference i've used when starting to learn how to use this framewor
 1. [Use Tailwind CSS with Spring Boot](https://www.wimdeblauwe.com/blog/2020/02/17/using-tailwind-css-with-spring-boot-and-thymeleaf/)
 
 # Reminder
-*It is okay not to know everything, it is okay not to use everything. As long as you are able to deliver 
+*It is okay to not know everything, it is okay to not use everything. As long as you are able to deliver 
 the requirements, you're good to go*
