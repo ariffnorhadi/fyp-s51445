@@ -1,4 +1,4 @@
-# Online School Registration and Quiz Management System (OSRQMS?)
+# Online School Registration and Quiz Management System (OSRQMS? :thinking:)
 A repository for Final Year Project at UMT by ariffnorhadi (s51445)
 
 # Kata-kata aluan
