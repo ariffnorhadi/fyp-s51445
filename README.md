@@ -13,6 +13,9 @@ I'm gonn put reference i've used when starting to learn how to use this framewor
 2. [Spring Security by Amigoscode (Nelson)](https://www.youtube.com/watch?v=her_7pa0vrg)
 3. dont stop googling and youtubing!
 
+## Extra/Bonus Reference
+1. [Use Tailwind CSS with Spring Boot](https://www.wimdeblauwe.com/blog/2020/02/17/using-tailwind-css-with-spring-boot-and-thymeleaf/)
+
 # Reminder
 *It is okay not to know everything, it is okay not to use everything. As long as you are able to deliver 
 the requirements, you're good to go*
